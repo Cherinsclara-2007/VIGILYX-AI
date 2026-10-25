@@ -140,9 +140,7 @@ const DataSource = {
   },
 
   async load() {
-    if (!this.isLive()) {
-      throw new Error("Backend API URL is not configured.");
-    }
+   const response = await fetch(`${CONFIG.API_BASE}/api/dashboard`);
 
     const response = await fetch(
       `${CONFIG.API_BASE}/api/dashboard`,
