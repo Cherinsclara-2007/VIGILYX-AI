@@ -1,5 +1,6 @@
 streamlit
 flask
+gunicorn
 opencv-python-headless
 ultralytics
 numpy
