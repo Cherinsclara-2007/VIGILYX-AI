@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VIGILYX AI · Smart Autonomous Video Surveillance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.383.0/lucide.min.js" defer></script>
+<script src="script.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar" aria-label="Primary">
+    <div class="brand">
+      <span class="brand-mark"><i data-lucide="shield-check"></i></span>
+      <span><strong>VIGILYX</strong><small>INTELLIGENT SECURITY</small></span>
+    </div>
+    <nav class="nav">
+      <a href="#overview" data-page="overview"><i data-lucide="layout-dashboard"></i>Overview</a>
+      <a href="#live" data-page="live"><i data-lucide="video"></i>Live Monitoring</a>
+      <a href="#events" data-page="events"><i data-lucide="siren"></i>Security Events</a>
+      <a href="#recordings" data-page="recordings"><i data-lucide="film"></i>Recordings</a>
+      <a href="#analytics" data-page="analytics"><i data-lucide="bar-chart-3"></i>Analytics</a>
+      <a href="#about" data-page="about"><i data-lucide="info"></i>About Project</a>
+    </nav>
+    <div class="sys-card">
+      <div class="sys-row">
+  <span class="dot dot-on" data-conn-dot></span>
+  <strong data-conn-text>Backend connected</strong>
+</div>
+<p>Live dashboard data connected.</p>
+    </div>
+  </aside>
+
+  <div class="scrim" id="scrim"></div>
+
+  <div class="content">
+    <!-- HEADER -->
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open navigation"><i data-lucide="menu"></i></button>
+      <div class="title"><h1 id="pageTitle">Overview</h1><p id="pageSub">System summary</p></div>
+      <div class="top-right">
+        <div class="clock" aria-live="off"><i data-lucide="clock"></i><span id="clock">--</span></div>
+        <span class="pill pill-muted" id="topCameraStatus">
+          <i data-lucide="camera-off"></i>
+          <span>Camera not connected</span>
+        </span>
+        <button class="icon-btn" id="notifBtn" aria-label="Notifications, 3 unread"><i data-lucide="bell"></i><span class="badge">3</span></button>
+      </div>
+    </header>
+
+    <main id="main">
+
+      <!-- OVERVIEW -->
+      <section class="page" id="page-overview">
+      <div class="banner">
+        <i data-lucide="shield-check"></i>
+        <span>
+          <strong>Backend connected.</strong>
+          Dashboard data is being loaded from the VIGILYX AI security log.
+        </span>
+      </div>
+        <div class="stats" id="stats"></div>
+        <div class="grid g-2-1">
+          <div class="panel">
+            <div class="panel-head"><h2>Recent security events</h2><a class="link" href="#events">View all</a></div>
+            <ul class="events" id="eventsMini"></ul>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Detections today</h2><span class="muted">by hour</span></div>
+            <div id="chartHourlyMini" class="chart"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LIVE -->
+      <section class="page" id="page-live" hidden>
+        <div class="grid g-live">
+          <div class="panel feed-panel">
+            <div class="panel-head">
+              <h2>Camera 01 · Main entrance</h2>
+              <span class="pill pill-muted" id="camStatus"><span class="dot dot-off"></span>Not connected</span>
+            </div>
+            <div class="feed" id="feed">
+              <div class="feed-grid"></div>
+              <svg class="zone" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <polygon points="52,34 92,34 92,92 52,92" />
+              </svg>
+              <span class="zone-label"><i data-lucide="octagon-alert"></i>Restricted zone</span>
+              <div class="feed-empty">
+                <span class="ring"><i data-lucide="video-off"></i></span>
+                <h3>No camera feed</h3>
+                <p>Connect the detection backend and press Start to stream video here.</p>
+              </div>
+              <span class="rec-tag" id="detTag"><span class="dot dot-off"></span>Detection idle</span>
+            </div>
+            <div class="controls">
+              <button class="btn btn-primary" id="startBtn"><i data-lucide="play"></i>Start monitoring</button>
+              <button class="btn" id="stopBtn" disabled><i data-lucide="square"></i>Stop</button>
+              <span class="muted hint">The zone overlay is a concept preview, not live output.</span>
+            </div>
+          </div>
+          <div class="side-stack">
+            <div class="panel">
+              <div class="panel-head"><h2>Detection status</h2></div>
+              <dl class="kv">
+                <div><dt>Model</dt><dd>YOLO person detector</dd></div>
+                <div><dt>Persons in frame</dt><dd>—</dd></div>
+                <div><dt>Zone breach</dt><dd>—</dd></div>
+                <div><dt>Frame rate</dt><dd>—</dd></div>
+              </dl>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h2>Latest alerts</h2></div>
+              <ul class="events" id="eventsLive"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EVENTS -->
+      <section class="page" id="page-events" hidden>
+        <div class="banner" id="dataBanner" hidden>
+          <i data-lucide="flask-conical"></i>
+          <span>
+            <strong>Backend disconnected.</strong>
+            Dashboard data is temporarily unavailable.
+          </span>
+        </div>
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Security events</h2>
+            <div class="seg" id="sevFilter" role="group" aria-label="Filter by severity">
+              <button class="on" data-f="all">All</button><button data-f="high">High</button><button data-f="medium">Medium</button><button data-f="low">Low</button>
+            </div>
+          </div>
+          <ul class="events big" id="eventsAll"></ul>
+        </div>
+      </section>
+
+      <!-- RECORDINGS -->
+      <section class="page" id="page-recordings" hidden>
+        <div class="banner"><i data-lucide="flask-conical"></i><span><strong>Sample data.</strong> Playback is disabled until recordings are served by the backend.</span></div>
+        <div class="panel">
+          <div class="panel-head"><h2>Recordings</h2><span class="muted" id="recCount"></span></div>
+          <div class="table" role="table">
+            <div class="tr th" role="row"><span>File</span><span>Date</span><span>Duration</span><span>Size</span><span></span></div>
+            <div id="recRows"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section class="page" id="page-analytics" hidden>
+        <div class="banner"><i data-lucide="flask-conical"></i><span><strong>Sample data.</strong> Charts are drawn from placeholder values in script.js.</span></div>
+        <div class="grid g-2-1">
+          <div class="panel"><div class="panel-head"><h2>Detections by hour</h2><span class="muted">Today</span></div><div id="chartHourly" class="chart tall"></div></div>
+          <div class="panel"><div class="panel-head"><h2>Event types</h2><span class="muted">Last 7 days</span></div><div id="chartDonut" class="donut-wrap"></div></div>
+        </div>
+        <div class="panel"><div class="panel-head"><h2>Alerts per day</h2><span class="muted">Last 7 days</span></div><div id="chartWeek" class="chart"></div></div>
+      </section>
+
+      <!-- ABOUT -->
+      <section class="page" id="page-about" hidden>
+        <div class="grid g-2-1">
+          <div class="panel prose">
+            <h2>Smart Autonomous Video Surveillance System</h2>
+            <p>An AI-based system that watches a camera feed, detects people with a YOLO model, and raises an alert when someone enters a restricted zone. Events and clips are logged so they can be reviewed later.</p>
+            <h3>How it works</h3>
+            <ol class="flow">
+              <li><i data-lucide="camera"></i><span><strong>Capture</strong>OpenCV reads frames from the camera.</span></li>
+              <li><i data-lucide="scan-face"></i><span><strong>Detect</strong>YOLO finds people in each frame.</span></li>
+              <li><i data-lucide="octagon-alert"></i><span><strong>Check zone</strong>A person inside the restricted area triggers an alert.</span></li>
+              <li><i data-lucide="database"></i><span><strong>Record</strong>The event and a clip are saved for review.</span></li>
+            </ol>
+            <p class="note"><i data-lucide="info"></i>This interface is a frontend prototype. It does not run detection or record video until connected to the Python backend.</p>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h2>Technologies</h2></div>
+            <ul class="tech">
+              <li><i data-lucide="terminal"></i>Python<small>Backend logic</small></li>
+              <li><i data-lucide="brain-circuit"></i>YOLO<small>Person detection</small></li>
+              <li><i data-lucide="eye"></i>OpenCV<small>Video processing</small></li>
+              <li><i data-lucide="code-2"></i>HTML<small>Structure</small></li>
+              <li><i data-lucide="palette"></i>CSS<small>Interface styling</small></li>
+              <li><i data-lucide="braces"></i>JavaScript<small>Interactivity</small></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
