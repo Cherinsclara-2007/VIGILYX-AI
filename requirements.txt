@@ -1,4 +1,4 @@
-flask
+streamlit
 opencv-python
 ultralytics
 numpy
