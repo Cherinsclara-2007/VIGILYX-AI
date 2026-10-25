@@ -19,7 +19,7 @@ from datetime import datetime, timedelta
 app = Flask(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent
-FRONTEND_DIR = BASE_DIR / 
+FRONTEND_DIR = BASE_DIR 
 RECORDINGS_DIR = BASE_DIR / "recordings"
 LOG_FILE = BASE_DIR / "security_log.txt"
 
