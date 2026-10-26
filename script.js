@@ -10,7 +10,7 @@
 /* ---------- 1. CONFIG ---------- */
 
 const CONFIG = {
-  API_BASE: "http://127.0.0.1:5000",
+  API_BASE: "",   // ✅ same server: local-ilum Render-ilum work cheyyum
 };
 
 
@@ -134,9 +134,9 @@ const SAMPLE_DATA = {
 
 /* ---------- 3. DATA SOURCE ---------- */
 
-const DataSource = {
+const DataSource = 
   isLive() {
-    return Boolean(CONFIG.API_BASE);
+  return typeof CONFIG.API_BASE === "string";
   },
 
   async load() {
