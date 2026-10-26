@@ -10,7 +10,7 @@
 /* ---------- 1. CONFIG ---------- */
 
 const CONFIG = {
-  API_BASE: "",
+  API_BASE: "http://127.0.0.1:5000",
 };
 
 
@@ -140,7 +140,9 @@ const DataSource = {
   },
 
   async load() {
-   const response = await fetch(`${CONFIG.API_BASE}/api/dashboard`);
+    if (!this.isLive()) {
+      throw new Error("Backend API URL is not configured.");
+    }
 
     const response = await fetch(
       `${CONFIG.API_BASE}/api/dashboard`,
