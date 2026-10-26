@@ -134,7 +134,7 @@ const SAMPLE_DATA = {
 
 /* ---------- 3. DATA SOURCE ---------- */
 
-const DataSource = 
+const DataSource = {
   isLive() {
   return typeof CONFIG.API_BASE === "string";
   },
